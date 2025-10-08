@@ -5,11 +5,20 @@ public class Tile {
     public boolean isEmpty;
     public int row;
     public char column;
+    public Piece piece;
 
     public Tile(int row, char column){
         setRow(row);
         setColumn(column);
     };
+
+    public void setPiece(Piece piece){
+        this.piece = piece;
+    }
+
+    public Piece getPiece(){
+        return piece;
+    }
 
     public void setRow(int row){
         if(row >= 1 && row <=8){

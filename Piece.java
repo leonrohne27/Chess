@@ -1,12 +1,12 @@
-public class Piece {
+public abstract class Piece {
 
-    private PieceType type;
     private String colour;
+    private Tile tile;
 
-    public Piece(PieceType type, String colour){
-        this.type = type;
+    public Piece(String colour){
         setColour(colour);
     }
+    public abstract void move();
 
     public void setColour(String colour){
         if (colour == "white" || colour == "black"){
@@ -15,6 +15,12 @@ public class Piece {
         else{
             System.out.println("Colour must be either 'black' or 'white'");
         }
+    }
+    public void setTile(Tile tile){
+        this.tile = tile;
+    }
+    public Tile getTile(){
+        return tile;
     }
 
     public String getColour(){
