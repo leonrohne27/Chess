@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
 
-    private static final Tile[][] board = new Tile [8][8];
+    public static final Tile[][] board = new Tile [8][8];
+    private static List<Piece> allPieces = new ArrayList<>();
 
     public static void createBoard(){
         for(int i=0;i<8;i++){
@@ -17,6 +20,7 @@ public class Game {
     public static void place(Piece piece, Tile tile){
         tile.setPiece(piece);
         piece.setTile(tile);
+        allPieces.add(piece);
     }
 
     public static void createAndPlacePieces(){
@@ -58,8 +62,6 @@ public class Game {
 
     public static void main(String[] args){
         Game.createBoard();
-        board[0][0].setPiece(new Rook("black"));
-        Piece whichPiece = board[0][0].getPiece();
-        System.out.println(whichPiece);
+        Game.createAndPlacePieces();
     }
 }

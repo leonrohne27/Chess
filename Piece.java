@@ -6,7 +6,9 @@ public abstract class Piece {
     public Piece(String colour){
         setColour(colour);
     }
+
     public abstract void move();
+    public abstract boolean isLegalMove();
 
     public void setColour(String colour){
         if (colour == "white" || colour == "black"){
