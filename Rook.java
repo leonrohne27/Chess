@@ -1,26 +1,27 @@
+import java.util.Objects;
+
 public class Rook extends Piece{
 
-    Tile currentTile = this.getTile();
-    int currentRow = currentTile.getRow();
-    char currentColumn = currentTile.getColumn();
-    Tile targetTile = null;
 
     public Rook(String colour) {
         super(colour);
     }
 
     @Override
-    public void move() {
-        if(isLegalMove() && 1==1) { //1==1 ergänzen um click auf Feld
-
-            targetTile = null; //ersetzen durch Feld das angeklickt wird
-            targetTile.setPiece(this);
-            this.setTile(targetTile);
-        }
+    public void move(Tile targetTile) {
     }
 
     @Override
-    public boolean isLegalMove() {
-        return false;
+    public boolean isLegalMove(Tile targetTile) {
+        int targetRow = targetTile.getRow();
+        char targetColumn = targetTile.getColumn();
+        int currentRow = this.getTile().getRow();
+        char currentColumn = this.getTile().getColumn();
+        int rowIndex = currentRow -1;
+        int columnIndex = currentColumn - 'A';
+
+
+
+            return false;
     }
 }

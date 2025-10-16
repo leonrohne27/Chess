@@ -1,7 +1,5 @@
 public class Tile {
 
-    public boolean isOccupiedWithEnemyPiece;
-    public boolean isOccupiedWithAllyPiece;
     public boolean isEmpty;
     public int row;
     public char column;

@@ -7,8 +7,8 @@ public abstract class Piece {
         setColour(colour);
     }
 
-    public abstract void move();
-    public abstract boolean isLegalMove();
+    public abstract void move(Tile targetTile);
+    public abstract boolean isLegalMove(Tile targetTile);
 
     public void setColour(String colour){
         if (colour == "white" || colour == "black"){
