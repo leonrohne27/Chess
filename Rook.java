@@ -19,59 +19,99 @@ public class Rook extends Piece{
         char currentColumn = this.getTile().getColumn();
         int rowIndex = currentRow -1;
         int columnIndex = currentColumn - 'A';
-        boolean noAllyPiecesInWayVertical = true;
-        boolean noAllyPiecesInWayHorizontal = true;
+        boolean noAllyPieceInWayVertical = true;
+        boolean noAllyPieceInWayHorizontal = true;
+        boolean noEnemyPieceInRangeVertical = true;
+        boolean noEnemyPieceInRangeHorizontal = true;
 
+        if(targetTile == null){
+            return false;
+        }
+
+        //Prüfen, ob eigene Figuren im Weg sind (vertikal+horizontal)
         if(currentRow < targetRow) {
             for (int i = currentRow; i < targetRow - 1; i++) {
+                if (targetTile.getPiece() != null && !Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())){
+                    noEnemyPieceInRangeVertical = false;
+                    break;
+                }
                 if (Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())) {
-                    noAllyPiecesInWayVertical = false;
+                    noAllyPieceInWayVertical = false;
                     break;
                 }
             }
         }
         if(currentRow > targetRow) {
             for (int i = targetRow; i < currentRow - 1; i++) {
+                if (targetTile.getPiece() != null && !Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())){
+                    noAllyPieceInWayVertical = false;
+                    break;
+                }
                 if (Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())) {
-                    noAllyPiecesInWayVertical = false;
+                    noAllyPieceInWayVertical = false;
                     break;
                 }
             }
         }
         if(currentColumn < targetColumn) {
             for (char i = currentColumn; i < targetColumn - 'A'; i++) {
+                if (targetTile.getPiece() != null && !Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
+                    noEnemyPieceInRangeHorizontal = false;
+                    break;
+                }
                 if (Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
-                    noAllyPiecesInWayHorizontal = false;
+                    noAllyPieceInWayHorizontal = false;
                     break;
                 }
             }
         }
         if(currentColumn > targetColumn) {
             for (char i = targetColumn; i < currentColumn - 'A'; i++) {
-                if (Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
-                    noAllyPiecesInWayHorizontal = false;
+                if (targetTile.getPiece() != null && !Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
+                    noEnemyPieceInRangeHorizontal = false;
                     break;
                 }
+                    if (Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
+                        noAllyPieceInWayHorizontal = false;
+                        break;
+                    }
+                }
             }
-        }
 
-        if(targetTile == null){
-            return false;
-        }
         //für vertikale Züge
-        if(!Objects.equals(targetTile.getPiece().getColour(), this.getColour())
+        if(targetTile.getPiece() == null
                 && targetColumn == currentColumn
-                && noAllyPiecesInWayVertical){
+                && noAllyPieceInWayVertical
+                && noEnemyPieceInRangeVertical){
             return true;
         }
         //für horizontale Züge
-        if(!Objects.equals(targetTile.getPiece().getColour(), this.getColour())
+        if(targetTile.getPiece() == null
                 && targetRow == currentRow
-                && noAllyPiecesInWayHorizontal){
+                && noAllyPieceInWayHorizontal
+                && noEnemyPieceInRangeHorizontal){
             return true;
         }
 
-        //Schmeißen noch implementieren (noEnemyPiecesInWayVertical/noEnemyPiecesInWayHoriontal)?
-            return false;
+        //schmeißen vertikal
+        if(targetTile.getPiece() != null
+                && !Objects.equals(targetTile.getPiece().getColour(), this.getColour())
+                && targetColumn == currentColumn
+                && noAllyPieceInWayVertical
+                && noEnemyPieceInRangeVertical){
+            //schmeißen
+            return true;
+        }
+
+        //schmeißen horizontal
+        if(targetTile.getPiece() != null
+                && !Objects.equals(targetTile.getPiece().getColour(), this.getColour())
+                && targetRow == currentRow
+                && noAllyPieceInWayHorizontal
+                && noEnemyPieceInRangeHorizontal){
+            //schmeißen
+            return true;
+        }
+        return false;
     }
 }

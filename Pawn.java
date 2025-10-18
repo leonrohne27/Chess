@@ -55,7 +55,7 @@ public class Pawn extends Piece{
                 && Objects.equals(targetTile.getPiece().getColour(), "black")
                 && targetRow == currentRow+1
                 && Math.abs(targetColumn - currentColumn) == 1){
-            //schmeißen
+            //schmeißen (mark as capturable?)
             return true;
 
         }
@@ -64,7 +64,7 @@ public class Pawn extends Piece{
                 && Objects.equals(targetTile.getPiece().getColour(), "white")
                 && targetRow == currentRow-1
                 && Math.abs(targetColumn - currentColumn) == 1){
-            //schmeißen
+            //schmeißen (mark as capturable?)
             return true;
         }
             return false;

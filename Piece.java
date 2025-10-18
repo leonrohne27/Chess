@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public abstract class Piece {
 
     private String colour;
@@ -11,7 +13,7 @@ public abstract class Piece {
     public abstract boolean isLegalMove(Tile targetTile);
 
     public void setColour(String colour){
-        if (colour == "white" || colour == "black"){
+        if (Objects.equals(colour, "white") || Objects.equals(colour, "black")){
             this.colour = colour;
         }
         else{
