@@ -10,8 +10,13 @@ public class Pawn extends Piece{
     public void move(Tile targetTile) {
     }
 
+    public static boolean isEnemyOrEmpty(Tile from, Tile to){
+        return to.getPiece() == null || !Objects.equals(to.getPiece().getColour(), from.getPiece().getColour());
+    }
+
     @Override
     public boolean isLegalMove(Tile targetTile) {
+        Tile currentTile = this.getTile();
         int targetRow = targetTile.getRow();
         char targetColumn = targetTile.getColumn();
         int currentRow = this.getTile().getRow();
@@ -22,49 +27,32 @@ public class Pawn extends Piece{
         if(targetTile == null){
             return false;
         }
-        if(targetTile.getPiece() == null
+        if(isEnemyOrEmpty(currentTile, targetTile)
                 && Objects.equals(this.getColour(), "white")
                 && currentRow == 2
                 && (targetRow == 3 || (targetRow ==4 && Game.board[rowIndex+1][columnIndex].getPiece() == null))
                 && currentColumn == targetColumn){
             return true;
         }
-        if(targetTile.getPiece() == null
+        if(isEnemyOrEmpty(currentTile, targetTile)
                 && Objects.equals(this.getColour(), "white")
                 && currentRow != 2
                 && targetRow == currentRow+1
                 && currentColumn == targetColumn){
             return true;
         }
-        if(targetTile.getPiece() == null
+        if(isEnemyOrEmpty(currentTile, targetTile)
                 && Objects.equals(this.getColour(), "black")
                 && currentRow == 7
                 && (targetRow == 6 || (targetRow == 5 && Game.board[currentRow-1][columnIndex].getPiece() == null))
                 && currentColumn == targetColumn) {
             return true;
         }
-        if(targetTile.getPiece() == null
+        if(isEnemyOrEmpty(currentTile, targetTile)
                 && Objects.equals(this.getColour(), "black")
                 && currentRow != 7
                 && targetRow == currentRow-1
                 && currentColumn == targetColumn){
-            return true;
-        }
-        if(Objects.equals(this.getColour(), "white")
-                && targetTile.getPiece() != null
-                && Objects.equals(targetTile.getPiece().getColour(), "black")
-                && targetRow == currentRow+1
-                && Math.abs(targetColumn - currentColumn) == 1){
-            //schmeißen (mark as capturable?)
-            return true;
-
-        }
-        if(Objects.equals(this.getColour(), "black")
-                && targetTile.getPiece() != null
-                && Objects.equals(targetTile.getPiece().getColour(), "white")
-                && targetRow == currentRow-1
-                && Math.abs(targetColumn - currentColumn) == 1){
-            //schmeißen (mark as capturable?)
             return true;
         }
             return false;

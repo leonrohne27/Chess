@@ -12,6 +12,8 @@ public class Queen extends Piece{
 
     @Override
     public boolean isLegalMove(Tile targetTile) {
-        return false;
+        Tile currentTile = this.getTile();
+        return (Rook.isStraightMove(currentTile,targetTile)&&Rook.isPathClearStraight(currentTile,targetTile)&&Rook.isEnemyOrEmpty(currentTile,targetTile)) ||
+                (Bishop.isDiagonalMove(currentTile,targetTile)&&Bishop.isPathClearDiagonal(currentTile,targetTile)&&Bishop.isEnemyOrEmpty(currentTile,targetTile));
     }
 }

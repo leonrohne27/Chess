@@ -11,107 +11,50 @@ public class Rook extends Piece{
     public void move(Tile targetTile) {
     }
 
-    @Override
-    public boolean isLegalMove(Tile targetTile) {
-        int targetRow = targetTile.getRow();
-        char targetColumn = targetTile.getColumn();
-        int currentRow = this.getTile().getRow();
-        char currentColumn = this.getTile().getColumn();
-        int rowIndex = currentRow -1;
-        int columnIndex = currentColumn - 'A';
-        boolean noAllyPieceInWayVertical = true;
-        boolean noAllyPieceInWayHorizontal = true;
-        boolean noEnemyPieceInRangeVertical = true;
-        boolean noEnemyPieceInRangeHorizontal = true;
+    public static boolean isStraightMove(Tile from, Tile to){
+        return(from.getRow() == to.getRow() || from.getColumn() == to.getColumn());
+    }
 
-        if(targetTile == null){
-            return false;
-        }
-
-        //Prüfen, ob eigene Figuren im Weg sind (vertikal+horizontal)
-        if(currentRow < targetRow) {
-            for (int i = currentRow; i < targetRow - 1; i++) {
-                if (targetTile.getPiece() != null && !Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())){
-                    noEnemyPieceInRangeVertical = false;
-                    break;
-                }
-                if (Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())) {
-                    noAllyPieceInWayVertical = false;
-                    break;
-                }
+    public static boolean isPieceInWayHorizontal(Tile from, Tile to){
+        int step = Integer.compare(to.getColumn(), from.getColumn());
+        int diffCol = to.getColumn() - from.getColumn();
+        int rowIndex = from.getRow() -1;
+        int columnIndex = from.getColumn() - 'A';
+        for(int i=step;i<diffCol;i+=step){
+            if (Game.board[rowIndex][columnIndex+i].getPiece() != null) {
+                return true;
             }
-        }
-        if(currentRow > targetRow) {
-            for (int i = targetRow; i < currentRow - 1; i++) {
-                if (targetTile.getPiece() != null && !Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())){
-                    noAllyPieceInWayVertical = false;
-                    break;
-                }
-                if (Objects.equals(Game.board[i][columnIndex].getPiece().getColour(), this.getColour())) {
-                    noAllyPieceInWayVertical = false;
-                    break;
-                }
-            }
-        }
-        if(currentColumn < targetColumn) {
-            for (char i = currentColumn; i < targetColumn - 'A'; i++) {
-                if (targetTile.getPiece() != null && !Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
-                    noEnemyPieceInRangeHorizontal = false;
-                    break;
-                }
-                if (Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
-                    noAllyPieceInWayHorizontal = false;
-                    break;
-                }
-            }
-        }
-        if(currentColumn > targetColumn) {
-            for (char i = targetColumn; i < currentColumn - 'A'; i++) {
-                if (targetTile.getPiece() != null && !Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
-                    noEnemyPieceInRangeHorizontal = false;
-                    break;
-                }
-                    if (Objects.equals(Game.board[rowIndex][i].getPiece().getColour(), this.getColour())) {
-                        noAllyPieceInWayHorizontal = false;
-                        break;
-                    }
-                }
-            }
-
-        //für vertikale Züge
-        if(targetTile.getPiece() == null
-                && targetColumn == currentColumn
-                && noAllyPieceInWayVertical
-                && noEnemyPieceInRangeVertical){
-            return true;
-        }
-        //für horizontale Züge
-        if(targetTile.getPiece() == null
-                && targetRow == currentRow
-                && noAllyPieceInWayHorizontal
-                && noEnemyPieceInRangeHorizontal){
-            return true;
-        }
-
-        //schmeißen vertikal
-        if(targetTile.getPiece() != null
-                && !Objects.equals(targetTile.getPiece().getColour(), this.getColour())
-                && targetColumn == currentColumn
-                && noAllyPieceInWayVertical
-                && noEnemyPieceInRangeVertical){
-            //schmeißen
-            return true;
-        }
-
-        //schmeißen horizontal
-        if(targetTile.getPiece() != null
-                && !Objects.equals(targetTile.getPiece().getColour(), this.getColour())
-                && targetRow == currentRow
-                && noAllyPieceInWayHorizontal
-                && noEnemyPieceInRangeHorizontal){
-            //schmeißen
-            return true;
         }
         return false;
+    }
+
+    public static boolean isPieceInWayVertical(Tile from, Tile to){
+        int step = Integer.compare(to.getRow(), from.getRow());
+        int diffRow = to.getRow() - from.getRow();
+        int rowIndex = from.getRow() -1;
+        int columnIndex = from.getColumn() - 'A';
+        for(int i=step;i<diffRow;i+=step){
+            if (Game.board[rowIndex+i][columnIndex].getPiece() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isPathClearStraight(Tile from, Tile to){
+        return !isPieceInWayHorizontal(from, to)
+                && !isPieceInWayVertical(from, to);
+    }
+
+    public static boolean isEnemyOrEmpty(Tile from, Tile to){
+        return to.getPiece() == null || !Objects.equals(to.getPiece().getColour(), from.getPiece().getColour());
+    }
+
+    @Override
+    public boolean isLegalMove(Tile targetTile) {
+        Tile currentTile = this.getTile();
+        return isStraightMove(currentTile,targetTile)
+                && isPathClearStraight(currentTile,targetTile)
+                && isEnemyOrEmpty(currentTile, targetTile);
     }
 }
