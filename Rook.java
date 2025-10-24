@@ -7,10 +7,6 @@ public class Rook extends Piece{
         super(colour);
     }
 
-    @Override
-    public void move(Tile targetTile) {
-    }
-
     public static boolean isStraightMove(Tile from, Tile to){
         return(from.getRow() == to.getRow() || from.getColumn() == to.getColumn());
     }
@@ -56,5 +52,13 @@ public class Rook extends Piece{
         return isStraightMove(currentTile,targetTile)
                 && isPathClearStraight(currentTile,targetTile)
                 && isEnemyOrEmpty(currentTile, targetTile);
+    }
+
+    @Override
+    public String getName() {
+        if(this.getColour().equals("white")){
+            return "wR";
+        }
+        return "bR";
     }
 }

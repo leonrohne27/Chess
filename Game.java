@@ -24,34 +24,34 @@ public class Game {
     }
 
     public static void createAndPlacePieces(){
-        Game.place(new Rook("black"),board[0][0]);
-        Game.place(new Knight("black"),board[0][1]);
-        Game.place(new Bishop("black"),board[0][2]);
-        Game.place(new Queen("black"),board[0][3]);
-        Game.place(new King("black"),board[0][4]);
-        Game.place(new Bishop("black"),board[0][5]);
-        Game.place(new Knight("black"),board[0][6]);
-        Game.place(new Rook("black"),board[0][7]);
-        Game.place(new Rook("white"),board[7][0]);
-        Game.place(new Knight("white"),board[7][1]);
-        Game.place(new Bishop("white"),board[7][2]);
-        Game.place(new Queen("white"),board[7][3]);
-        Game.place(new King("white"),board[7][4]);
-        Game.place(new Bishop("white"),board[7][5]);
-        Game.place(new Knight("white"),board[7][6]);
-        Game.place(new Rook("white"),board[7][7]);
+        Game.place(new Rook("black"),board[7][0]);
+        Game.place(new Knight("black"),board[7][1]);
+        Game.place(new Bishop("black"),board[7][2]);
+        Game.place(new Queen("black"),board[7][3]);
+        Game.place(new King("black"),board[7][4]);
+        Game.place(new Bishop("black"),board[7][5]);
+        Game.place(new Knight("black"),board[7][6]);
+        Game.place(new Rook("black"),board[7][7]);
+        Game.place(new Rook("white"),board[0][0]);
+        Game.place(new Knight("white"),board[0][1]);
+        Game.place(new Bishop("white"),board[0][2]);
+        Game.place(new Queen("white"),board[0][3]);
+        Game.place(new King("white"),board[0][4]);
+        Game.place(new Bishop("white"),board[0][5]);
+        Game.place(new Knight("white"),board[0][6]);
+        Game.place(new Rook("white"),board[0][7]);
         for(int j=0;j<8;j++){
-            board[1][j].setPiece(new Pawn("black"));
+            board[6][j].setPiece(new Pawn("black"));
         }
         for(int j=0;j<8;j++){
-            board[6][j].setPiece(new Pawn("white"));
+            board[1][j].setPiece(new Pawn("white"));
         }
 
         for(int j=0;j<8;j++){
-            board[1][j].getPiece().setTile(board[1][j]);
+            board[6][j].getPiece().setTile(board[6][j]);
         }
         for(int j=0;j<8;j++){
-            board[6][j].getPiece().setTile(board[6][j]);
+            board[1][j].getPiece().setTile(board[1][j]);
         }
     }
 

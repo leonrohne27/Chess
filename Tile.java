@@ -1,9 +1,12 @@
+import javafx.scene.layout.StackPane;
+
 public class Tile {
 
     public boolean isEmpty;
     public int row;
     public char column;
     public Piece piece;
+    private StackPane cell;
 
     public Tile(int row, char column){
         setRow(row);
@@ -40,5 +43,12 @@ public class Tile {
     }
     public char getColumn(){
         return this.column;
+    }
+
+    public void setCell(StackPane cell){
+        this.cell = cell;
+    }
+    public StackPane getCell(){
+        return this.cell;
     }
 }

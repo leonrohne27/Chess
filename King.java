@@ -9,11 +9,6 @@ public class King extends Piece{
         super(colour);
     }
 
-    @Override
-    public void move(Tile targetTile) {
-
-    }
-
     public boolean isEnemyOrEmpty(Tile targetTile){
         return targetTile.getPiece() == null || !Objects.equals(this.getColour(), targetTile.getPiece().getColour());
     }
@@ -29,5 +24,13 @@ public class King extends Piece{
 
         return isEnemyOrEmpty(targetTile) && diffRow <= 1 && diffColumn <= 1;
 
+    }
+
+    @Override
+    public String getName() {
+        if(this.getColour().equals("white")){
+            return "wK";
+        }
+        return "bK";
     }
 }

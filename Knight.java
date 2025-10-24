@@ -9,11 +9,6 @@ public class Knight extends Piece{
         super(colour);
     }
 
-    @Override
-    public void move(Tile targetTile) {
-
-    }
-
     public static boolean isLShapeMove(Tile from, Tile to){
         int diffRow = abs(to.getRow() - from.getRow());
         int diffCol = abs(to.getColumn() - from.getColumn());
@@ -29,5 +24,13 @@ public class Knight extends Piece{
     public boolean isLegalMove(Tile targetTile) {
         Tile currentTile = this.getTile();
         return isLShapeMove(currentTile,targetTile) && isEnemyOrEmpty(currentTile,targetTile);
+    }
+
+    @Override
+    public String getName() {
+        if(this.getColour().equals("white")){
+            return "wN";
+        }
+        return "bN";
     }
 }

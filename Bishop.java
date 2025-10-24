@@ -9,10 +9,6 @@ public class Bishop extends Piece{
         super(colour);
     }
 
-    @Override
-    public void move(Tile targetTile) {
-    }
-
     public static boolean isDiagonalMove(Tile from, Tile to){
         return Math.abs(to.getRow() - from.getRow()) == Math.abs(to.getColumn() - from.getColumn());
     }
@@ -40,5 +36,13 @@ public class Bishop extends Piece{
         return isDiagonalMove(currentTile,targetTile)
                 && isPathClearDiagonal(currentTile,targetTile)
                 && isEnemyOrEmpty(currentTile,targetTile);
+    }
+
+    @Override
+    public String getName() {
+        if(this.getColour().equals("white")){
+            return "wB";
+        }
+        return "bB";
     }
 }
