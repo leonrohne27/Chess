@@ -24,7 +24,19 @@ public abstract class Piece {
         StackPane toCell = targetTile.getCell();
         ImageView iv = this.getImageView();
 
+
         fromTile.setPiece(null);
+
+        if(targetTile.getPiece() != null){
+            Piece captured = targetTile.getPiece();
+            ImageView capIv = captured.getImageView();
+            StackPane capCell = targetTile.getCell();
+            capCell.getChildren().remove(capIv);
+            captured.setImageView(null);
+            targetTile.setPiece(null);
+
+            System.out.println("Captured " + captured.getName());
+        }
         targetTile.setPiece(this);
         this.setTile(targetTile);
 

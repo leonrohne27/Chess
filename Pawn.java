@@ -49,6 +49,18 @@ public class Pawn extends Piece{
                 && currentColumn == targetColumn){
             return true;
         }
+        if(Objects.equals(this.getColour(), "white")
+                && Objects.equals(targetTile.getPiece().getColour(), "black")
+                && targetRow == currentRow+1
+                && (targetColumn == currentColumn +1) || (targetColumn == currentColumn-1)){
+            return true;
+        }
+        if(Objects.equals(this.getColour(), "black")
+                && Objects.equals(targetTile.getPiece().getColour(), "white")
+                && targetTile.getRow() == currentRow-1
+                && (targetColumn == currentColumn +1) || (targetColumn == currentColumn-1)){
+            return true;
+        }
             return false;
         }
 

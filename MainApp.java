@@ -60,10 +60,6 @@ public class MainApp extends Application{
                         selectedPiece = null;
                     }
                 });
-
-
-
-
                 grid.add(cell, col, 7-row);
             }
         }

@@ -56,7 +56,8 @@ public class Game {
     }
 
     public static void capture(Piece piece){
-        //noch zu implementieren
+        piece.getTile().setPiece(null);
+        System.out.println("Captured piece: " + piece.getName());
     }
 
     static HashMap<Integer, Character> convertColumns = new HashMap<>(Map.of(

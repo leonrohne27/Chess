@@ -14,13 +14,37 @@ public class Bishop extends Piece{
     }
 
     public static boolean isPathClearDiagonal(Tile from, Tile to){
-        int diffRow = abs(from.getRow() - to.getRow());
+        int diffRow = from.getRow() - to.getRow();
+        int diffcol = from.getColumn() - to.getColumn();
         int rowIndex = from.getRow() -1;
         int columnIndex = from.getColumn() - 'A';
 
-        for(int i=1; i<diffRow; i++) {
-            if (Game.board[rowIndex + i][columnIndex + i].getPiece() != null) {
-                return false;
+        if(diffRow < 0 && diffcol < 0) {
+            for (int i = 1; i < -diffRow; i++) {
+                if (Game.board[rowIndex + i][columnIndex + i].getPiece() != null) {
+                    return false;
+                }
+            }
+        }
+        if(diffRow < 0 && diffcol > 0) {
+            for (int i = 1; i < -diffRow; i++) {
+                if (Game.board[rowIndex + i][columnIndex - i].getPiece() != null) {
+                    return false;
+                }
+            }
+        }
+        else if(diffRow > 0 && diffcol < 0) {
+            for (int i = 1; i < diffRow; i++) {
+                if (Game.board[rowIndex - i][columnIndex + i].getPiece() != null) {
+                    return false;
+                }
+            }
+        }
+        else if(diffRow > 0 && diffcol > 0) {
+            for (int i = 1; i < diffRow; i++) {
+                if (Game.board[rowIndex - i][columnIndex - i].getPiece() != null) {
+                    return false;
+                }
             }
         }
         return true;
