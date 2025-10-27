@@ -9,11 +9,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.util.Objects;
 
 public class MainApp extends Application{
 
     public static final int TILE_SIZE = 80;
     private Piece selectedPiece = null;
+    private boolean isGameFinished = false;
+    private boolean isWhiteTurn = true;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -51,14 +54,38 @@ public class MainApp extends Application{
                 }
 
                 cell.setOnMouseClicked(e ->{
-                    if(selectedPiece == null){
-                        selectedPiece = tileObj.getPiece();
-                        System.out.println("Selected Piece: " + selectedPiece.getName() + " on tile " + selectedPiece.getTile().getRow() + selectedPiece.getTile().getColumn());
+                    if(isGameFinished){return;}
+
+                    Tile clickedTile = tileObj;
+
+                    if(selectedPiece == null ) {
+                        if (isWhiteTurn) {
+                            if (clickedTile.getPiece()!=null && Objects.equals(clickedTile.getPiece().getColour(), "white")) {
+                                selectedPiece = clickedTile.getPiece();
+                                System.out.println("Selected Piece " + selectedPiece.getName() + " on Tile " + selectedPiece.getTile().getRow() + selectedPiece.getTile().getColumn());
+                            } else {
+                                System.out.println("white's turn");
+                            }
+                        } else {
+                            if (clickedTile.getPiece()!=null && Objects.equals(clickedTile.getPiece().getColour(), "black")) {
+                                selectedPiece = clickedTile.getPiece();
+                                System.out.println("Selected Piece " + selectedPiece.getName() + " on Tile " + selectedPiece.getTile().getRow() + selectedPiece.getTile().getColumn());
+                            } else{
+                                System.out.println("black's turn");
+                            }
+                        }
                     }
                     else{
-                        selectedPiece.move(tileObj);
+                        if(selectedPiece.isLegalMove(clickedTile)){
+                            isWhiteTurn = !isWhiteTurn;
+                        }
+                        selectedPiece.move(clickedTile);
                         selectedPiece = null;
+                        if(Piece.isKingCaptured){
+                            isGameFinished = true;
+                        }
                     }
+
                 });
                 grid.add(cell, col, 7-row);
             }

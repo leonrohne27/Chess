@@ -6,59 +6,55 @@ public class Pawn extends Piece{
         super(colour);
     }
 
-    public static boolean isEnemyOrEmpty(Tile from, Tile to){
-        return to.getPiece() == null || !Objects.equals(to.getPiece().getColour(), from.getPiece().getColour());
-    }
 
     @Override
     public boolean isLegalMove(Tile targetTile) {
-        Tile currentTile = this.getTile();
+
         int targetRow = targetTile.getRow();
         char targetColumn = targetTile.getColumn();
         int currentRow = this.getTile().getRow();
         char currentColumn = this.getTile().getColumn();
-        int rowIndex = currentRow -1;
-        int columnIndex = currentColumn - 'A';
 
-
-        if(isEnemyOrEmpty(currentTile, targetTile)
+        if(targetTile.getPiece() == null
                 && Objects.equals(this.getColour(), "white")
                 && currentRow == 2
                 && (targetRow == currentRow+1 || (targetRow == currentRow+2))
                 && currentColumn == targetColumn){
             return true;
         }
-        if(isEnemyOrEmpty(currentTile, targetTile)
+        if(targetTile.getPiece() == null
                 && Objects.equals(this.getColour(), "white")
                 && currentRow != 2
                 && targetRow == currentRow+1
                 && currentColumn == targetColumn){
             return true;
         }
-        if(isEnemyOrEmpty(currentTile, targetTile)
+        if(targetTile.getPiece() == null
                 && Objects.equals(this.getColour(), "black")
                 && currentRow == 7
                 && (targetRow == currentRow-1 || (targetRow == currentRow -2))
                 && currentColumn == targetColumn) {
             return true;
         }
-        if(isEnemyOrEmpty(currentTile, targetTile)
+        if(targetTile.getPiece() == null
                 && Objects.equals(this.getColour(), "black")
-                && currentRow != 6
+                && currentRow != 7
                 && targetRow == currentRow-1
                 && currentColumn == targetColumn){
             return true;
         }
         if(Objects.equals(this.getColour(), "white")
+                && targetTile.getPiece() != null
                 && Objects.equals(targetTile.getPiece().getColour(), "black")
                 && targetRow == currentRow+1
-                && (targetColumn == currentColumn +1) || (targetColumn == currentColumn-1)){
+                && (targetColumn == currentColumn +1 || targetColumn == currentColumn-1)){
             return true;
         }
         if(Objects.equals(this.getColour(), "black")
+                && targetTile.getPiece() != null
                 && Objects.equals(targetTile.getPiece().getColour(), "white")
-                && targetTile.getRow() == currentRow-1
-                && (targetColumn == currentColumn +1) || (targetColumn == currentColumn-1)){
+                && targetRow == currentRow-1
+                && (targetColumn == currentColumn +1 || targetColumn == currentColumn-1)){
             return true;
         }
             return false;

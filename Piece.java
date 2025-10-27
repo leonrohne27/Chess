@@ -8,6 +8,7 @@ public abstract class Piece {
     private String colour;
     private Tile tile;
     public ImageView imageView;
+    public static boolean isKingCaptured = false;
 
     public Piece(String colour){
         setColour(colour);
@@ -15,6 +16,10 @@ public abstract class Piece {
 
 
     public void move(Tile targetTile){
+        boolean whiteWon = false;
+        boolean blackWon = false;
+        Piece captured = null;
+
         if(!isLegalMove(targetTile)) {
             System.out.println("Invalid move");
             return;
@@ -28,14 +33,21 @@ public abstract class Piece {
         fromTile.setPiece(null);
 
         if(targetTile.getPiece() != null){
-            Piece captured = targetTile.getPiece();
+            captured = targetTile.getPiece();
             ImageView capIv = captured.getImageView();
             StackPane capCell = targetTile.getCell();
             capCell.getChildren().remove(capIv);
             captured.setImageView(null);
             targetTile.setPiece(null);
 
-            System.out.println("Captured " + captured.getName());
+            if(Objects.equals(captured.getName(), "bK")){
+                whiteWon = true;
+                isKingCaptured = true;
+            }
+            else if(Objects.equals(captured.getName(), "wk")){
+                blackWon = true;
+                isKingCaptured = true;
+            }
         }
         targetTile.setPiece(this);
         this.setTile(targetTile);
@@ -43,6 +55,15 @@ public abstract class Piece {
         toCell.getChildren().add(iv);
 
         System.out.println("Moved " + this.getName() + " to " + targetTile.getRow() + targetTile.getColumn());
+        if(captured != null) {
+            System.out.println("Captured " + captured.getName());
+        }
+        if(whiteWon){
+            System.out.println("white won!");
+        }
+        if(blackWon){
+            System.out.println("black won!");
+        }
 
     }
     public abstract boolean isLegalMove(Tile targetTile);
