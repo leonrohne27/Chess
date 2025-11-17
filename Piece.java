@@ -16,54 +16,56 @@ public abstract class Piece {
 
 
     public void move(Tile targetTile){
-        boolean whiteWon = false;
-        boolean blackWon = false;
-        Piece captured = null;
-
-        if(!isLegalMove(targetTile)) {
-            System.out.println("Invalid move");
-            return;
-        }
         Tile fromTile = this.getTile();
-        StackPane fromCell = fromTile.getCell();
-        StackPane toCell = targetTile.getCell();
-        ImageView iv = this.getImageView();
-
-
         fromTile.setPiece(null);
-
-        if(targetTile.getPiece() != null){
-            captured = targetTile.getPiece();
-            ImageView capIv = captured.getImageView();
-            StackPane capCell = targetTile.getCell();
-            capCell.getChildren().remove(capIv);
-            captured.setImageView(null);
-            targetTile.setPiece(null);
-
-            if(Objects.equals(captured.getName(), "bK")){
-                whiteWon = true;
-                isKingCaptured = true;
-            }
-            else if(Objects.equals(captured.getName(), "wk")){
-                blackWon = true;
-                isKingCaptured = true;
-            }
-        }
         targetTile.setPiece(this);
         this.setTile(targetTile);
-
-        toCell.getChildren().add(iv);
-
-        System.out.println("Moved " + this.getName() + " to " + targetTile.getRow() + targetTile.getColumn());
-        if(captured != null) {
-            System.out.println("Captured " + captured.getName());
-        }
-        if(whiteWon){
-            System.out.println("white won!");
-        }
-        if(blackWon){
-            System.out.println("black won!");
-        }
+//        boolean whiteWon = false;
+//        boolean blackWon = false;
+//
+//        if(!isLegalMove(targetTile)) {
+//            System.out.println("Invalid move");
+//            return;
+//        }
+//        StackPane fromCell = fromTile.getCell();
+//        StackPane toCell = targetTile.getCell();
+//        ImageView iv = this.getImageView();
+//
+//
+//        fromTile.setPiece(null);
+//
+//        if(targetTile.getPiece() != null){
+//            captured = targetTile.getPiece();
+//            ImageView capIv = captured.getImageView();
+//            StackPane capCell = targetTile.getCell();
+//            capCell.getChildren().remove(capIv);
+//            captured.setImageView(null);
+//            targetTile.setPiece(null);
+//
+//            if(Objects.equals(captured.getName(), "bK")){
+//                whiteWon = true;
+//                isKingCaptured = true;
+//            }
+//            else if(Objects.equals(captured.getName(), "wk")){
+//                blackWon = true;
+//                isKingCaptured = true;
+//            }
+//        }
+//        targetTile.setPiece(this);
+//        this.setTile(targetTile);
+//
+//        toCell.getChildren().add(iv);
+//
+//        System.out.println("Moved " + this.getName() + " to " + targetTile.getRow() + targetTile.getColumn());
+//        if(captured != null) {
+//            System.out.println("Captured " + captured.getName());
+//        }
+//        if(whiteWon){
+//            System.out.println("white won!");
+//        }
+//        if(blackWon){
+//            System.out.println("black won!");
+//        }
 
     }
     public abstract boolean isLegalMove(Tile targetTile);
